@@ -29,6 +29,8 @@ namespace Personnr_01
                 ValidateLastFour(personalnr.Substring(8, 3));
                 //Check gender
                 gender = GenderCheck(personalnr.Substring(10, 1));
+                //Luhn-algorithm
+                LuhnAlgo(personalnr.Substring(2, 9), personalnr.Substring(11, 1));
             }
             //If user input is incorrect, catch and write error, also rerun Main();
             catch(Exception e)
@@ -49,9 +51,7 @@ namespace Personnr_01
         //Check if 1753-2020
         static void ValidateYear(string yyyy)
         {
-
-             int validYear;
-             validYear = int.Parse(yyyy);
+             int validYear = int.Parse(yyyy);
              if (validYear > 2020 || validYear < 1753)
              {
                  throw new ArgumentException("Date is not valid: " + validYear);
@@ -63,8 +63,7 @@ namespace Personnr_01
         //Validate month
         static void ValidateMonth(string mm)
         {
-            int validMonth;
-            validMonth = int.Parse(mm);
+            int validMonth = int.Parse(mm);
             if (validMonth > 12 || validMonth < 1)
             {
                 throw new ArgumentException("Date is not valid: " + validMonth);
@@ -76,7 +75,6 @@ namespace Personnr_01
             int year = int.Parse(yyyy);
             if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
             {
-
                 int[] leapYearMaxDays = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
                 int monthDays = leapYearMaxDays[int.Parse(mm) - 1];
                 int dayOfMonth = int.Parse(dd);
@@ -87,7 +85,6 @@ namespace Personnr_01
                 }
 
             }
-
             else
             {
                 int[] normalYearMaxDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -106,8 +103,7 @@ namespace Personnr_01
         //Check if nnn is 000-999 
         static void ValidateLastFour(string nnn)
         {
-            double validateLastFour;
-            validateLastFour = double.Parse(nnn);
+            double validateLastFour = double.Parse(nnn);
             if (validateLastFour > 999 || validateLastFour < 0)
             {
                 throw new ArgumentException("Date is not valid: " + validateLastFour);
@@ -128,6 +124,43 @@ namespace Personnr_01
             return "Man";
           
         }
+        //Run personal number through Luhn-algorithm
+        static void LuhnAlgo(string personalnr, string controlNumber)
+        {
+            int sum = 0;
+            for (int i = 0; i < personalnr.Length; i++)
+            {
+                //9410135835
+                int value = int.Parse(personalnr.Substring(i, 1));
+                if (i % 2 == 0)
+                {
+
+                    int doubledValue = value * 2;
+                    if (doubledValue > 9)
+                    {
+                        sum += doubledValue - 9;
+                    }
+                    else 
+                    {
+                        sum += doubledValue;
+                    }
+                    
+                }
+                else
+                { 
+                    sum += value;
+                }
+                
+            }            
+            double year = double.Parse(personalnr);
+            double lastDigit = double.Parse(controlNumber);
+            if (!((10 - ( sum % 10)) % 10 == lastDigit))
+            {
+                throw new ArgumentException("Date is not valid: " + year);
+            }
+            
+        }
+
         
     }
 }
