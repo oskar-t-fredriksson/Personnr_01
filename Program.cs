@@ -24,9 +24,9 @@ namespace Personnr_01
                 //Check if month is valid
                 ValidateMonth(personalnr.Substring(4, 2));
                 ////Check if day is valid for month
-                //ValidateYear(personalnr.Substring(6, 2));
+                ValidateDay(personalnr.Substring(4, 2), personalnr.Substring(6, 2), personalnr.Substring(0, 4));
                 ////YYYYMMDDnnnc check if nnn is 000-999 
-                //ValidateYear(personalnr.Substring(8, 3));
+                ValidateLastFour(personalnr.Substring(8, 3));
                 //Check gender
                 gender = GenderCheck(personalnr.Substring(10, 1));
             }
@@ -70,20 +70,49 @@ namespace Personnr_01
             }
         }
         //Validate day
-        static void ValidateDay(string dd)
+        static void ValidateDay(string mm, string dd, string yyyy)
         {
             //Gonna need array for this
-            int validDay31;            
-            validDay31 = int.Parse(dd);
-            if (validDay31 > 31 || validDay31 < 1)
+            int[] maxDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+            int monthDays = maxDays[int.Parse(mm) - 1];
+            int dayOfMonth = int.Parse(dd);
+            int year = int.Parse(yyyy);
+            if (dayOfMonth < 1 || dayOfMonth > monthDays)
             {
-                throw new ArgumentException("Date is not valid: " + validDay31);
+                throw new ArgumentException("Date is not valid: " + dayOfMonth);
             }
-            int validDay30;
-            validDay30 = int.Parse(dd);
-            if (validDay30 > 30 || validDay30 < 1)
+            if (year % 400 == 0)
             {
-                throw new ArgumentException("Date is not valid: " + validDay30);
+                throw new ArgumentException("Date is not valid: " + year);
+            }
+            if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
+            {
+                int[] 
+            }
+            //int validDay31;            
+            //validDay31 = int.Parse(dd);
+            //if (validDay31 > 31 || validDay31 < 1)
+            //{
+            //    throw new ArgumentException("Date is not valid: " + validDay31);
+            //}
+            //int validDay30;
+            //validDay30 = int.Parse(dd);
+            //if (validDay30 > 30 || validDay30 < 1)
+            //{
+            //    throw new ArgumentException("Date is not valid: " + validDay30);
+            //}
+            //int[] day31 = new int[dd];
+            //int
+
+        }
+        //Check if nnn is 000-999 
+        static void ValidateLastFour(string nnn)
+        {
+            double validateLastFour;
+            validateLastFour = double.Parse(nnn);
+            if (validateLastFour > 999 || validateLastFour < 0)
+            {
+                throw new ArgumentException("Date is not valid: " + validateLastFour);
             }
         }
         //Validate Gender
@@ -101,5 +130,6 @@ namespace Personnr_01
             return "Man";
           
         }
+        
     }
 }
