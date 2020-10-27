@@ -16,7 +16,7 @@ namespace Personnr_01
             //User input 
             UserInput();
             personalnr = Console.ReadLine();
-
+            //Run user input through following methodes to check if it is valid
             try
             {
                 //1753-2020
@@ -30,6 +30,7 @@ namespace Personnr_01
                 //Check gender
                 gender = GenderCheck(personalnr.Substring(10, 1));
             }
+            //If user input is incorrect, catch and write error, also rerun Main();
             catch(Exception e)
             {
                 Console.WriteLine(e);
@@ -40,12 +41,12 @@ namespace Personnr_01
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
             Console.ReadKey();
         }
-        
+        //Personal number question
         static void UserInput()
         {
             Console.Write("Ange ditt personnummer: ");
         }
-        //Check if 1753-2020 [method]
+        //Check if 1753-2020
         static void ValidateYear(string yyyy)
         {
 
@@ -72,37 +73,34 @@ namespace Personnr_01
         //Validate day
         static void ValidateDay(string mm, string dd, string yyyy)
         {
-            //Gonna need array for this
-            int[] maxDays = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-            int monthDays = maxDays[int.Parse(mm) - 1];
-            int dayOfMonth = int.Parse(dd);
             int year = int.Parse(yyyy);
-            if (dayOfMonth < 1 || dayOfMonth > monthDays)
-            {
-                throw new ArgumentException("Date is not valid: " + dayOfMonth);
-            }
-            if (year % 400 == 0)
-            {
-                throw new ArgumentException("Date is not valid: " + year);
-            }
             if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
             {
-                int[] 
+
+                int[] leapYearMaxDays = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                int monthDays = leapYearMaxDays[int.Parse(mm) - 1];
+                int dayOfMonth = int.Parse(dd);
+
+                if (dayOfMonth < 1 || dayOfMonth > monthDays)
+                {
+                    throw new ArgumentException("Date is not valid: " + dayOfMonth);
+                }
+
             }
-            //int validDay31;            
-            //validDay31 = int.Parse(dd);
-            //if (validDay31 > 31 || validDay31 < 1)
-            //{
-            //    throw new ArgumentException("Date is not valid: " + validDay31);
-            //}
-            //int validDay30;
-            //validDay30 = int.Parse(dd);
-            //if (validDay30 > 30 || validDay30 < 1)
-            //{
-            //    throw new ArgumentException("Date is not valid: " + validDay30);
-            //}
-            //int[] day31 = new int[dd];
-            //int
+
+            else
+            {
+                int[] normalYearMaxDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                int monthDays = normalYearMaxDays[int.Parse(mm) - 1];
+                int dayOfMonth = int.Parse(dd);
+
+                if (dayOfMonth < 1 || dayOfMonth > monthDays)
+                {
+                    throw new ArgumentException("Date is not valid: " + dayOfMonth);
+                }
+
+            }
+            
 
         }
         //Check if nnn is 000-999 
