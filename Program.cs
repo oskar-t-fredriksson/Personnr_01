@@ -43,6 +43,7 @@ namespace Personnr_01
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
             Console.ReadKey();
         }
+        #region My methodes for every calculation of personal number
         //Personal number question
         static void UserInput()
         {
@@ -127,11 +128,14 @@ namespace Personnr_01
         //Run personal number through Luhn-algorithm
         static void LuhnAlgo(string personalnr, string controlNumber)
         {
+            //Sum to calculate if valid or not
             int sum = 0;
+            //Calculation of the 9 digits
             for (int i = 0; i < personalnr.Length; i++)
             {
-                //9410135835
+                //Value of every index in personalnr
                 int value = int.Parse(personalnr.Substring(i, 1));
+                //Every digit time 2, else time 1 and wont need any calculation
                 if (i % 2 == 0)
                 {
 
@@ -154,13 +158,15 @@ namespace Personnr_01
             }            
             double year = double.Parse(personalnr);
             double lastDigit = double.Parse(controlNumber);
+            //Luhn Algrorithm
             if (!((10 - ( sum % 10)) % 10 == lastDigit))
             {
                 throw new ArgumentException("Date is not valid: " + year);
             }
-            //test
+            
         }
+        #endregion
 
-        
+
     }
 }
