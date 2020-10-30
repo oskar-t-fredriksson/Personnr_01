@@ -212,7 +212,7 @@ namespace Personnr_01
         #endregion
 
 
-        //check http://www.regular-expressions.info/dates.html to figure out 19-20 for 10 digits
+        
         #region My methodes for every calculation of personal number with 10 digits
         static void ValidateYear10Digits(string yy)
         {
