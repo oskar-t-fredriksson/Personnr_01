@@ -20,7 +20,7 @@ namespace Personnr_01
             //Regex for 12 digits
             Regex userInput12Digits = new Regex(@"^[0-9]{12}$");
             //Regex for 10 digits and - or +
-            Regex userInput10DigitsAnd1Char = new Regex(@"[\+-]");
+            Regex userInput10DigitsAnd1Char = new Regex(@"[0-9][\+-]");
             //If user uses 12 digits use following methodes
             if (userInput12Digits.IsMatch(personalnr))
             { 
@@ -47,8 +47,9 @@ namespace Personnr_01
                     Main();
                 }
             }
+
             //If user uses 10 digits and + or - use following methodes
-            if (userInput10DigitsAnd1Char.IsMatch(personalnr))
+            else if (userInput10DigitsAnd1Char.IsMatch(personalnr))
             {
                 //Run user input through following methodes to check if it is valid
                 try
@@ -73,6 +74,11 @@ namespace Personnr_01
                     Console.WriteLine(e);
                     Main();
                 }
+            }
+            else 
+            {
+                Console.WriteLine("Invalid input!");
+                Main();
             }
             //Print if personal number is correct and gender 
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
@@ -172,7 +178,6 @@ namespace Personnr_01
             {
                 //To skip + and - symbol
                 string currentSymbol = personalnr.Substring(i, 1);              
-                Console.WriteLine(currentSymbol);
                 //Value of every index in personalnr
                 int value = int.Parse(currentSymbol);
                 //Every digit time 2, else time 1 and wont need any calculation
@@ -195,7 +200,6 @@ namespace Personnr_01
                 }
                 
             }
-            Console.WriteLine(sum);
             int lastDigit = int.Parse(controlNumber);
             //Luhn Algrorithm
             if (!((10 - ( sum % 10)) % 10 == lastDigit))
