@@ -12,10 +12,11 @@ namespace Personnr_01
     {
         static void Main()
         {
+            //User input
             string personalnr;
             string gender = "";
-            //User input 
-            UserInput();
+            //States question to user 
+            menuQuestion();
             personalnr = Console.ReadLine();
             //Regex for 12 digits
             Regex userInput12Digits = new Regex(@"^[0-9]{12}$");
@@ -86,7 +87,7 @@ namespace Personnr_01
         }
         #region My methodes for every calculation of personal number with 12 digits
         //Personal number question
-        static void UserInput()
+        static void menuQuestion()
         {
             Console.Write("Ange ditt personnummer: ");
         }
