@@ -182,7 +182,7 @@ namespace Personnr_01
                 int value = int.Parse(currentSymbol);
                 //Every digit time 2, else time 1 and wont need any calculation
                 if (i % 2 == 0)
-                {                    
+                {              
                     int doubledValue = value * 2;
                     if (doubledValue > 9)
                     {
@@ -212,8 +212,9 @@ namespace Personnr_01
         #endregion
 
 
-        
+
         #region My methodes for every calculation of personal number with 10 digits
+        //Check if year is valid 10 digits
         static void ValidateYear10Digits(string yy)
         {
             int validYear = int.Parse(yy);
@@ -222,6 +223,7 @@ namespace Personnr_01
                 throw new ArgumentException("Date is not valid: " + validYear);
             }
         }
+        //Check if day is valid 10 digits, also checks leap years
         static void ValidateDay10Digits(string mm, string dd, string yy, string plusMinus)
         {
             int year = int.Parse(yy);
