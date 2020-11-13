@@ -18,12 +18,8 @@ namespace Personnr_01
             //States question to user 
             menuQuestion();
             personalnr = Console.ReadLine();
-            //Regex for 12 digits
-            Regex userInput12Digits = new Regex(@"^[0-9]{12}$");
-            //Regex for 10 digits and - or +
-            Regex userInput10DigitsAnd1Char = new Regex(@"[0-9][\+-]");
-            //If user uses 12 digits use following methodes
-            if (userInput12Digits.IsMatch(personalnr))
+            //If user uses only digits
+            if (personalnr.All(char.IsDigit))
             { 
             //Run user input through following methodes to check if it is valid
                 try
@@ -42,15 +38,14 @@ namespace Personnr_01
                     LuhnAlgo(personalnr.Substring(2, 9), personalnr.Substring(11, 1));                  
                 }
                 //If user input is incorrect, catch and write error, also rerun Main();
-                catch(Exception e)
+                catch(Exception)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine("Incorrect personal number, try again!");
                     Main();
                 }
             }
-
-            //If user uses 10 digits and + or - use following methodes
-            else if (userInput10DigitsAnd1Char.IsMatch(personalnr))
+            //If user uses anything else except digits
+            else
             {
                 //Run user input through following methodes to check if it is valid
                 try
@@ -67,20 +62,14 @@ namespace Personnr_01
                     gender = GenderCheck(personalnr.Substring(9, 1));
                     //Luhn-algorithm
                     LuhnAlgo(personalnr.Substring(0, 6) + personalnr.Substring(7, 3), personalnr.Substring(10, 1));
-
                 }
                 //If user input is incorrect, catch and write error, also rerun Main();
-                catch (Exception e)
+                catch (Exception)
                 {
-                    Console.WriteLine(e);
+                    Console.WriteLine("Incorrect personal number, try again!");
                     Main();
                 }
-            }
-            else 
-            {
-                Console.WriteLine("Invalid input!");
-                Main();
-            }
+            }            
             //Print if personal number is correct and gender 
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
             Console.ReadKey();
@@ -98,10 +87,7 @@ namespace Personnr_01
              if (validYear > 2020 || validYear < 1753)
              {
                  throw new ArgumentException("Date is not valid: " + validYear);
-             }
-            
-            
-           
+             }                                   
         }
         //Validate month
         static void ValidateMonth(string mm)
@@ -122,27 +108,21 @@ namespace Personnr_01
             {
                 int[] leapYearMaxDays = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
                 int monthDays = leapYearMaxDays[int.Parse(mm) - 1];
-
                 if (dayOfMonth < 1 || dayOfMonth > monthDays)
                 {
                     throw new ArgumentException("Date is not valid: " + dayOfMonth);
                 }
-
             }
             //Else if not leap year
             else
             {
                 int[] normalYearMaxDays = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
                 int monthDays = normalYearMaxDays[int.Parse(mm) - 1];
-
                 if (dayOfMonth < 1 || dayOfMonth > monthDays)
                 {
                     throw new ArgumentException("Date is not valid: " + dayOfMonth);
                 }
-
-            }
-            
-
+            }           
         }
         //Check if nnn is 000-999 
         static void ValidateLastFour(string nnn)
@@ -156,7 +136,6 @@ namespace Personnr_01
         //Validate Gender
         static string GenderCheck(string gender)
         {
-
             if (int.Parse(gender) == 0)
             {
                 return "Kvinna";
@@ -165,13 +144,11 @@ namespace Personnr_01
             {
                 return "Kvinna";
             }
-            return "Man";
-          
+            return "Man";          
         }
         //Run personal number through Luhn-algorithm
         static void LuhnAlgo(string personalnr, string controlNumber)
-        {
-            
+        {            
             //Sum to calculate if valid or not
             int sum = 0;
             //Calculation of the 9 digits
@@ -192,28 +169,21 @@ namespace Personnr_01
                     else 
                     {
                         sum += doubledValue;
-                    }
-                    
+                    }                    
                 }
                 else
                 { 
                     sum += value;
-                }
-                
+                }               
             }
             int lastDigit = int.Parse(controlNumber);
             //Luhn Algrorithm
             if (!((10 - ( sum % 10)) % 10 == lastDigit))
             {
                 throw new ArgumentException("Date is not valid: " + personalnr);
-            }
-            
+            }            
         }
-
         #endregion
-
-
-
         #region My methodes for every calculation of personal number with 10 digits
         //Check if year is valid 10 digits
         static void ValidateYear10Digits(string yy)
