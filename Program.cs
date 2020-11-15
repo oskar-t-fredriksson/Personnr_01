@@ -45,7 +45,7 @@ namespace Personnr_01
                 }
             }
             //If user uses anything else except digits
-            else
+            else if (personalnr.Contains('-') || personalnr.Contains('+'))
             {
                 //Run user input through following methodes to check if it is valid
                 try
@@ -69,10 +69,16 @@ namespace Personnr_01
                     Console.WriteLine("Incorrect personal number, try again!");
                     Main();
                 }
-            }            
-            //Print if personal number is correct and gender 
+
+            }
+            else if (personalnr.Any(char.IsLetter))
+            {
+                Console.WriteLine("Invalid input");
+                Main();
+            }
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
             Console.ReadKey();
+            //Print if personal number is correct and gender 
         }
         #region My methodes for every calculation of personal number with 12 digits
         //Personal number question
