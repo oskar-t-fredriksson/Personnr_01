@@ -17,7 +17,7 @@ namespace Personnr_01
             //States question to user 
             menuQuestion();
             personalnr = Console.ReadLine();
-            //If user uses only digits
+            //If user uses 12 digits
             if (personalnr.All(char.IsDigit) && personalnr.Length == 12)
             {
                 //Run user input through following methodes to check if it is valid
@@ -43,7 +43,7 @@ namespace Personnr_01
                     Main();
                 }
             }
-            //If user uses '-' or '+' and digits
+            //If user uses '-' or '+' and 10 digits
             else if (personalnr.Contains('-') && personalnr.Length == 11 || personalnr.Contains('+') && personalnr.Length == 11)
             {
                 //Run user input through following methodes to check if it is valid
