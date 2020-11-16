@@ -18,8 +18,8 @@ namespace Personnr_01
             menuQuestion();
             personalnr = Console.ReadLine();
             //If user uses only digits
-            if (personalnr.All(char.IsDigit))
-            { 
+            if (personalnr.All(char.IsDigit) && personalnr.Length == 11)
+            {
             //Run user input through following methodes to check if it is valid
                 try
                 {
@@ -44,7 +44,7 @@ namespace Personnr_01
                 }
             }
             //If user uses '-' or '+' and digits
-            else if (personalnr.Contains('-') || personalnr.Contains('+'))
+            else if (personalnr.Contains('-') && personalnr.Length == 10 || personalnr.Contains('+') && personalnr.Length == 10)
             {
                 //Run user input through following methodes to check if it is valid
                 try
@@ -71,7 +71,7 @@ namespace Personnr_01
 
             }
             //If user uses any letters at all
-            else if (personalnr.Any(char.IsLetter))
+            else if (personalnr.Any(char.IsLetter) || personalnr.Length > 11 || personalnr.Length < 10)
             {
                 Console.WriteLine("Incorrect personal number, try again!");
                 Main();
