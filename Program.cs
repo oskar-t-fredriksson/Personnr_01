@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Personnr_01
@@ -44,7 +43,7 @@ namespace Personnr_01
                     Main();
                 }
             }
-            //If user uses anything else except digits
+            //If user uses '-' or '+' and digits
             else if (personalnr.Contains('-') || personalnr.Contains('+'))
             {
                 //Run user input through following methodes to check if it is valid
@@ -71,9 +70,10 @@ namespace Personnr_01
                 }
 
             }
+            //If user uses any letters at all
             else if (personalnr.Any(char.IsLetter))
             {
-                Console.WriteLine("Invalid input");
+                Console.WriteLine("Incorrect personal number, try again!");
                 Main();
             }
             Console.WriteLine("{0} är godkänt personnummer och personen är en {1}", personalnr, gender);
