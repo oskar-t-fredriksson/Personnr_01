@@ -18,9 +18,9 @@ namespace Personnr_01
             menuQuestion();
             personalnr = Console.ReadLine();
             //If user uses only digits
-            if (personalnr.All(char.IsDigit) && personalnr.Length == 11)
+            if (personalnr.All(char.IsDigit) && personalnr.Length == 12)
             {
-            //Run user input through following methodes to check if it is valid
+                //Run user input through following methodes to check if it is valid
                 try
                 {
                     //1753-2020
@@ -34,17 +34,17 @@ namespace Personnr_01
                     //Check gender
                     gender = GenderCheck(personalnr.Substring(10, 1));
                     //Luhn-algorithm
-                    LuhnAlgo(personalnr.Substring(2, 9), personalnr.Substring(11, 1));                  
+                    LuhnAlgo(personalnr.Substring(2, 9), personalnr.Substring(11, 1));
                 }
                 //If user input is incorrect, catch and write error, also rerun Main();
-                catch(Exception)
+                catch (Exception)
                 {
                     Console.WriteLine("Incorrect personal number, try again!");
                     Main();
                 }
             }
             //If user uses '-' or '+' and digits
-            else if (personalnr.Contains('-') && personalnr.Length == 10 || personalnr.Contains('+') && personalnr.Length == 10)
+            else if (personalnr.Contains('-') && personalnr.Length == 11 || personalnr.Contains('+') && personalnr.Length == 11)
             {
                 //Run user input through following methodes to check if it is valid
                 try
@@ -68,10 +68,14 @@ namespace Personnr_01
                     Console.WriteLine("Incorrect personal number, try again!");
                     Main();
                 }
-
             }
-            //If user uses any letters at all
-            else if (personalnr.Any(char.IsLetter) || personalnr.Length > 11 || personalnr.Length < 10)
+            //If user uses any letters at all and if the string is shorter than 11 characters or more than 12 characters
+            else if (personalnr.Any(char.IsLetter))
+            {
+                Console.WriteLine("Incorrect personal number, try again!");
+                Main();
+            }
+            else 
             {
                 Console.WriteLine("Incorrect personal number, try again!");
                 Main();
@@ -220,7 +224,6 @@ namespace Personnr_01
                     {
                         throw new ArgumentException("Date is not valid: " + dayOfMonth);
                     }
-
                 }
             }
             if (plusMinus == "-")
@@ -237,11 +240,8 @@ namespace Personnr_01
                     {
                         throw new ArgumentException("Date is not valid: " + dayOfMonth);
                     }
-
                 }
-            }
-            
-
+            }            
             //Else if not leap year
             else
             {
@@ -252,13 +252,8 @@ namespace Personnr_01
                 {
                     throw new ArgumentException("Date is not valid: " + dayOfMonth);
                 }
-
             }
-
-
         }
-
-
         #endregion
     }
 }
