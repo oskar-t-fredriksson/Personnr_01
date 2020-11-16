@@ -69,12 +69,13 @@ namespace Personnr_01
                     Main();
                 }
             }
-            //If user uses any letters at all and if the string is shorter than 11 characters or more than 12 characters
+            //If user uses any letters
             else if (personalnr.Any(char.IsLetter))
             {
                 Console.WriteLine("Incorrect personal number, try again!");
                 Main();
             }
+            //All other invalid input
             else 
             {
                 Console.WriteLine("Incorrect personal number, try again!");
